@@ -122,3 +122,28 @@
 > 각 단계의 예측 결과는 후속 단계의 입력으로 활용됩니다.  
 > 이러한 구조는 사고 관련 정보를 **단계적으로 분리하여 예측**함으로써,  
 > 복잡한 판단 과정을 모듈화하고, 영상만으로도 **자동·객관적으로 과실 비율을 산정할 수 있는 구조**를 제공합니다.
+
+
+# 모델 성능 및 결과
+
+### Stage 1: (사고 장소) 모델 분류 결과
+
+Stage1 best model train, val - Accuracy, Loss result :
+
+|Dataset|	Loss (CrossEntorpy)	|Top-1 Accuracy|
+|:------:|:--------:|:----------:|
+|Train|	0.529|	0.996|
+|Validation|	1.300	|	0.715	|
+
+Stage1 train, val - Accuracy , Loss curve :
+
+![image](https://github.com/user-attachments/assets/8388c2cb-c3a4-470c-841d-1fede6eb71b7)
+
+
+Stage1 best model test - Top-1, Top-3 Accuracy :
+
+|Dataset|	Top-1 Accuracy	|Top-3 Accuracy|
+|:------:|:--------:|:----------:|
+|Test|	0.700|	0.899|
+
+
