@@ -146,4 +146,60 @@ Stage1 best model test - Top-1, Top-3 Accuracy :
 |:------:|:--------:|:----------:|
 |Test|	0.700|	0.899|
 
+<br>
+
+### Stage2 (사고 특징, 객체 A 진행 방향, 객체 B 진행 방향) 모델 분류 결과
+
+Stage2 best model train, val - Loss result :
+
+|Dataset|	Loss (Focal Loss)	|
+|:------:|:--------:|
+|Train|	0.064|
+|Validation|	1.300	|
+
+Stage2 best model train, val - Top-1 Accuracy result :
+
+|Dataset|	Feature Top-1 Accuracy|	Object A Top-1 Accuracy|	Object B Top-1 Accuracy|
+|:------:|:--------:|:----------:|:----------:|
+|Train	|0.982|	0.959|	0.963|
+|Validation|	0.596|	0.500|	0.490|
+
+Stage2 train, val - Accuracy , Loss curve :
+
+![image](https://github.com/user-attachments/assets/4982138a-38a9-4ce0-a757-2f59e2fdb875)
+
+Stage2 best model test - Top-1 Accuracy :
+|Dataset|	Feature Top-1 Accuracy|	Object A Top-1 Accuracy|	Object B Top-1 Accuracy|
+|:------:|:--------:|:----------:|:----------:|
+|Test	|0.612|	0.490|	0.472|
+
+Stage2 best model test - Top-3 Accuracy :
+|Dataset|	Feature Top-3 Accuracy|	Object A Top-3 Accuracy|	Object B Top-3 Accuracy|
+|:------:|:--------:|:----------:|:----------:|
+|Test	|0.788|	0.653|	0.648|
+
+<br>
+
+### Stage3 (최종 과실 비율) 모델 분류 결과
+
+Stage3 best model train, val - Loss result :
+|Dataset|	Loss (CrossEntorpy)	|Top-1 Accuracy|
+|:------:|:--------:|:----------:|
+|Train|	0.873|	0.878|
+|Validation|	1.758	|	0.557	|
+
+Stage3 train, val - Accuracy , Loss curve :
+
+![image](https://github.com/user-attachments/assets/6aec2fa4-2ef9-45d1-b84a-2e53bd315ea9)
+
+Stage3 best model test - Top-1 Accuracy :
+|Dataset|Top-1 Accuracy|
+|:------:|:--------:|
+|Test|	0.510|
+
+Stage3 model ±1 class Accuracy :
+|Dataset|1-Off  Accuracy|
+|:------:|:--------:|
+|Test|	0.663|
+
 
