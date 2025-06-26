@@ -11,7 +11,7 @@ from tqdm import tqdm
 from torch.optim.lr_scheduler import StepLR
 
 # 체크포인트 디렉토리
-CHECKPOINT_DIR = "./checkpoints4"
+CHECKPOINT_DIR = "./checkpoints.."
 os.makedirs(CHECKPOINT_DIR, exist_ok=True)
 
 normalize = transforms.Normalize(mean=[0.485, 0.456, 0.406],

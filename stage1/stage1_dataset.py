@@ -4,7 +4,7 @@ from torch.utils.data import Dataset
 from PIL import Image
 import torchvision.transforms as transforms
 import numpy as np
-from config import *
+from stage1_config import *
 
 class MultiFrameDataset(Dataset):
     def __init__(self, image_root, label_txt, transform=None, frames_per_sample=FRAMES_PER_SAMPLE):

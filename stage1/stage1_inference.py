@@ -1,19 +1,22 @@
+# stage1_inference.py
+# 완성된 모델 성능 추론 시 사용
+
 import os
 import torch
 import torch.nn as nn
 from torch.utils.data import DataLoader
 import torchvision.transforms as transforms
 
-from dataset import MultiFrameDataset
-from stage1.stage1_model import MultiFrameClassifier
+from stage1_dataset import MultiFrameDataset
+from stage1_model import MultiFrameClassifier
 from stage1_utils import accuracy  # 기존에 쓰시던 Top-1 계산 함수
-from config import BATCH_SIZE, FRAMES_PER_SAMPLE, NUM_CLASSES
+from stage1_config import BATCH_SIZE, FRAMES_PER_SAMPLE, NUM_CLASSES
 
 def main():
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
     # 저장된 best model 경로
-    checkpoint_path = "./checkpoints4/best_model.pth"
+    checkpoint_path = "/checkpoints../best_model.pth"
     assert os.path.exists(checkpoint_path), f"Checkpoint not found: {checkpoint_path}"
 
     # val/test 전처리와 동일하게 맞춰주세요
@@ -26,8 +29,8 @@ def main():
 
     # Test dataset 경로와 리스트 파일을 알맞게 설정
     test_ds = MultiFrameDataset(
-        "data2/test",                   # test 프레임 폴더
-        "tsn_dataset/test_accident_place.txt",  # test 리스트
+        "",                   # test dataset 경로
+        "",  # label 포함된 test의 txt 파일
         test_transform,
         FRAMES_PER_SAMPLE
     )
@@ -77,7 +80,7 @@ def main():
     print(f"Test Top-1 Accuracy: {top1_acc:.4f}")
     print(f"Test Top-3 Accuracy: {top3_acc:.4f}")
 
-    # logits, labels, keys 저장 (필요시)
+    # logits, labels, keys 저장
     out = {
         "keys": all_keys,
         "logits": torch.cat(all_logits, dim=0),

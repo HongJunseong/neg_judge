@@ -2,10 +2,10 @@ import os
 import torch
 import pandas as pd
 from torch.nn import CrossEntropyLoss
-from config import EPOCHS  # CHECKPOINT_DIR = "./checkpoints4"
-from utils import accuracy  # Top-1 accuracy 계산 함수
+from stage1_config import EPOCHS  # CHECKPOINT_DIR = "./checkpoints4"
+from stage1_utils import accuracy  # Top-1 accuracy 계산 함수
 
-CHECKPOINT_DIR = "./checkpoints4"
+CHECKPOINT_DIR = "./checkpoints.."
 
 def main():
     criterion = CrossEntropyLoss(label_smoothing=0.1)

@@ -1,7 +1,7 @@
 import torch
 import torch.nn as nn
 import torchvision.models as models
-from config import *
+from stage1_config import *
 
 class MultiFrameClassifier(nn.Module):
     def __init__(
@@ -19,7 +19,7 @@ class MultiFrameClassifier(nn.Module):
         self.feature_extractor = nn.Sequential(*list(resnet.children())[:-1])
         self.feature_dim = 512
 
-        # Final classifier with tunable hidden dimension and dropout
+        # classifier with tunable hidden dimension and dropout
         self.classifier = nn.Sequential(
             nn.Linear(self.feature_dim, hidden_dim),
             nn.BatchNorm1d(hidden_dim),
@@ -34,6 +34,7 @@ class MultiFrameClassifier(nn.Module):
             feat = self.feature_extractor(x)  # [B, 512, 1, 1]
             feat = feat.flatten(1)            # [B, 512]
             feats.append(feat)
+
         # Temporal average pooling
         pooled_feats = torch.mean(torch.stack(feats, dim=1), dim=1)  # [B, 512]
 

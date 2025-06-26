@@ -9,15 +9,13 @@ from tqdm import tqdm
 from torch.utils.data import DataLoader
 from torchvision import transforms
 
-from stage1.stage1_dataset import MultiFrameDataset
-from stage1.stage1_model import MultiFrameClassifier
+from stage1_dataset import MultiFrameDataset
+from stage1_model import MultiFrameClassifier
 from stage1_utils import accuracy
-from stage1.stage1_config import (
-    EPOCHS
-)
+from stage1_config import EPOCHS
 
 # 체크포인트 폴더 생성
-CHECKPOINT_DIR = "./checkpoints_optuna"
+CHECKPOINT_DIR = "/checkpoints.."
 os.makedirs(CHECKPOINT_DIR, exist_ok=True)
 
 DEVICE = torch.device("cuda" if torch.cuda.is_available() else "cpu")
@@ -50,7 +48,7 @@ def get_data_loader(image_root, label_txt, batch_size, is_train=True):
         num_workers=4
     )
 
-# Optuna objective 함수 with pruning and checkpointing
+# Optuna objective function with pruning
 def objective(trial):
     # Initialize best validation accuracy for checkpointing
     best_val = 0.0
@@ -67,13 +65,13 @@ def objective(trial):
     # 데이터로더
     train_loader = get_data_loader(
         image_root="data/train",
-        label_txt="dataset_txt/train_accident_place.txt",
+        label_txt="dataset_txt/train_accident_place.txt", # label 포함된 train dataset의 txt
         batch_size=batch_size,
         is_train=True
     )
     valid_loader = get_data_loader(
         image_root="data/val",
-        label_txt="dataset_txt/val_accident_place.txt",
+        label_txt="dataset_txt/val_accident_place.txt", # label 포함된 validation dataset의 txt
         batch_size=batch_size,
         is_train=False
     )
@@ -138,7 +136,7 @@ def objective(trial):
     # pruning 없이 완료된 trial 최종 성능 반환
     return best_val
 
-# 1) CSV 저장용 콜백 정의
+# CSV 저장용 콜백 정의
 def save_trials_to_csv(study, trial):
     df = study.trials_dataframe()
     df.to_csv("optuna_trials_results.csv", index=False)
