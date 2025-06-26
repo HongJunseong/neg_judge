@@ -234,7 +234,7 @@ if __name__ == '__main__':
                 'scheduler_state_dict': scheduler.state_dict(),
                 'weighted_score': weighted_score
             }, best_path)
-            print(f"👉 New best weighted model saved (epoch {epoch}, score {weighted_score:.4f}) at\n   {best_path}")
+            print(f"New best weighted model saved (epoch {epoch}, score {weighted_score:.4f}) at\n   {best_path}")
 
         # val preds 저장
         save_preds(epoch, 'val', all_ids_vl, all_f_vl, all_a_vl, all_b_vl)
