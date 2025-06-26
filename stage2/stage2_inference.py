@@ -9,34 +9,30 @@ from stage2_dataset import Stage2Dataset
 from stage2_model_slowfast50 import Stage2Model
 from stage2_config import BATCH_SIZE, NUM_CLASSES, NUM_FEATURES, NUM_A_PROGRESS, NUM_B_PROGRESS
 
-# ----------------------------
 # 설정: 파일 경로 및 하이퍼파라미터
-# ----------------------------
 # Stage1 Test logits (.pth)에 저장된 keys, logits, labels
-PF_LOGITS_PATH   = "./checkpoints4/test_first_preds.pth"
 
-# Stage2 학습된 모델 체크포인트
-STAGE2_CKPT_PATH = "./checkpoints6_result/stage2_best.pth"
+PF_LOGITS_PATH   = "./checkpoints.../test_first_preds.pth"
 
-# 최종 Stage2 Test 예측값 저장 경로
-OUTPUT_PATH      = "./checkpoints6_result/test_stage2_preds.pth"
+# Stage2 에서 학습된  best model
+STAGE2_CKPT_PATH = "./checkpoints.../stage2_best.pth"
+
+# Stage2 test 예측값 저장 경로
+OUTPUT_PATH      = "./checkpoints.../test_stage2_preds.pth"
 
 # Test 데이터셋 경로 및 레이블 매핑 파일
-IMAGE_ROOT       = "data2/test"
-FEATURE_TXT      = "tsn_dataset/test_accident_place_feature_mapped.txt"
-A_TXT            = "tsn_dataset/test_vehicle_a_progress_info_mapped.txt"
-B_TXT            = "tsn_dataset/test_vehicle_b_progress_info_mapped.txt"
+IMAGE_ROOT       = "data/test"
+FEATURE_TXT      = "dataset_txt/test_accident_place_feature_mapped.txt"
+A_TXT            = "dataset_txt/test_vehicle_a_progress_info_mapped.txt"
+B_TXT            = "dataset_txt/test_vehicle_b_progress_info_mapped.txt"
 
-# ----------------------------
-# 1) Stage1 Test logits 불러오기
-# ----------------------------
+
+# Stage1 Test logits 불러오기
 pf_data = torch.load(PF_LOGITS_PATH, map_location="cpu")
 pf_logits = pf_data["logits"]  # tensor [N, num_pf]
-# pf_data["labels"] 를 통해 필요 시 정답 레이블 확인 가능
 
-# ----------------------------
-# 2) Test 데이터 전처리 및 DataLoader
-# ----------------------------
+
+# Test 데이터 전처리 및 DataLoader
 mean = [0.485, 0.456, 0.406]
 std  = [0.229, 0.224, 0.225]
 test_transform = transforms.Compose([
@@ -63,9 +59,7 @@ test_loader = DataLoader(
     pin_memory=True
 )
 
-# ----------------------------
-# 3) Stage2 모델 로드
-# ----------------------------
+# Stage2 모델 로드
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 model = Stage2Model(
     num_pf=NUM_CLASSES,
@@ -78,9 +72,7 @@ checkpoint = torch.load(STAGE2_CKPT_PATH, map_location=device)
 model.load_state_dict(checkpoint["model_state_dict"])
 model.eval()
 
-# ----------------------------
-# 4) Inference 및 성능 평가
-# ----------------------------
+# Inference 및 성능 평가
 def compute_topk(logits, labels, k=3):
     topk = logits.topk(k, dim=1).indices
     return (topk == labels.unsqueeze(1)).any(dim=1).float().mean().item()
@@ -133,9 +125,7 @@ print(f"Test Feature   ▶ Top-1: {feat_t1:.4f}, Top-3: {feat_t3:.4f}")
 print(f"Test A Direction▶ Top-1: {a_t1:.4f}, Top-3: {a_t3:.4f}")
 print(f"Test B Direction▶ Top-1: {b_t1:.4f}, Top-3: {b_t3:.4f}")
 
-# ----------------------------
-# 5) 결과 저장
-# ----------------------------
+# 결과 저장
 output = {
     "ids":            all_ids,
     "feat_logits":    torch.cat(all_feat_logits, dim=0),

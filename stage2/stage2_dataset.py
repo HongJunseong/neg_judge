@@ -25,7 +25,7 @@ class Stage2Dataset(Dataset):
         self.frames_per_sample = frames_per_sample
         self.random_sampling = random_sampling
 
-        # 1) 라벨 맵 로드
+        # 라벨 맵 로드
         self.f_map = {}
         with open(feature_txt, 'r') as f:
             for line in f:
@@ -42,7 +42,7 @@ class Stage2Dataset(Dataset):
                 vid, lbl = line.strip().split()
                 self.b_map[vid] = int(lbl)
 
-        # 2) 비디오별 프레임 경로 저장
+        # 비디오별 프레임 경로 저장
         self.video_frames = {}
         for vid in self.f_map:
             if vid in self.a_map and vid in self.b_map:
@@ -57,10 +57,10 @@ class Stage2Dataset(Dataset):
                 if len(imgs) >= frames_per_sample:
                     self.video_frames[vid] = imgs
 
-        # 3) 유효한 sample list
+        # 유효한 sample list
         self.samples = list(self.video_frames.keys())
 
-        # 4) 1차 예측 logits 로드
+        # 1차 예측 logits load
         data = torch.load(preds_path)
         keys, logits = data['keys'], data['logits']
         self.pf_map = {k: logits[i] for i, k in enumerate(keys)}

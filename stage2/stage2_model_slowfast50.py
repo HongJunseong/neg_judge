@@ -22,7 +22,7 @@ class Stage2Model(nn.Module):
         super().__init__()
         self.temperature = temperature
 
-        # ✅ SlowFast-R50 백본 (pytorchvideo)
+        # SlowFast-R50 백본 (pytorchvideo)
         self.backbone = slowfast_r50(pretrained=True)
         self.backbone.blocks[-1].proj = nn.Identity()
         self.feat_dim = 2304 # (2048 + 256)

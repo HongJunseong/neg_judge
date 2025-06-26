@@ -17,10 +17,10 @@ from stage2_utils import FocalLoss
 import torch.multiprocessing as mp
 mp.set_sharing_strategy('file_system')
 
-# 1) 1차 모델 preds용 디렉토리 (for preds_path in Stage2Dataset)
-FIRST_CHECKPOINT_DIR = "./checkpoints4"
-# 2) OPTUNA 전용 체크포인트 디렉토리
-OPTUNA_BASE_DIR = "./checkpoints_stage2_optuna_slowfast"
+# 1차 모델 preds용 디렉토리 (for preds_path in Stage2Dataset)
+FIRST_CHECKPOINT_DIR = "./checkpoints..."
+# OPTUNA 전용 체크포인트 디렉토리
+OPTUNA_BASE_DIR = "./checkpoints..."
 os.makedirs(OPTUNA_BASE_DIR, exist_ok=True)
 
 DEVICE = torch.device("cuda" if torch.cuda.is_available() else "cpu")
@@ -116,7 +116,7 @@ def run_one_trial(hparams, trial):
 
     criterion = FocalLoss(alpha=hparams["focal_alpha"], gamma=hparams["focal_gamma"])
 
-    # 옵티마이저
+    # Optimizer
     if hparams["optimizer_name"] == "SGD":
         optimizer = SGD(
             model.parameters(),

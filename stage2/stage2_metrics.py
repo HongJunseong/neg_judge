@@ -8,8 +8,8 @@ from torch.nn import CrossEntropyLoss
 import torch.multiprocessing as mp
 mp.set_sharing_strategy('file_system')
 
-# 설정: 필요에 따라 경로와 에포크 수를 조정하세요
-CHECKPOINT_DIR = "./checkpoints4_result"
+# 설정: 필요에 따라 경로와 에포크 수를 조정
+CHECKPOINT_DIR = "./checkpoints..."
 EPOCHS = 60
 
 def compute_topk(logits, labels, k):

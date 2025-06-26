@@ -14,9 +14,9 @@ from stage2_utils import FocalLoss
 
 
 # 1차 모델 결과 디렉토리
-CHECKPOINT_DIR = "./checkpoints4"
+CHECKPOINT_DIR = "./checkpoints..."
 # 2차 모델 결과 및 preds 디렉토리
-CHECKPOINT_DIR_2 = "./checkpoints6_result"
+CHECKPOINT_DIR_2 = "./checkpoints....."
 
 os.makedirs(CHECKPOINT_DIR, exist_ok=True)
 os.makedirs(CHECKPOINT_DIR_2, exist_ok=True)
@@ -75,28 +75,18 @@ if __name__ == '__main__':
 
     # transforms 정의
     train_transform = transforms.Compose([
-        #transforms.Resize((256, 455)),
-        #transforms.RandomResizedCrop(256, scale=(0.65625, 1.0), ratio=(1.0,1.0)),
-        #transforms.Resize((244, 244)),
-        #transforms.RandomHorizontalFlip(p=0.5),
-        #transforms.ToTensor(),
-        #transforms.Normalize(mean, std),
-        transforms.Resize(256),                      # 짧은 변 256px, 종횡비 유지
+        transforms.Resize(256),                      
         transforms.RandomResizedCrop(224, scale=(0.8,1.0)),  
         transforms.RandomHorizontalFlip(p=0.5),
-        RandAugment(num_ops=2, magnitude=9),         # 색·형태 변형
-        transforms.ColorJitter(0.1,0.1,0.1,0.5), # 절반으로 #0.5 였음 끝에
+        RandAugment(num_ops=2, magnitude=9),        
+        transforms.ColorJitter(0.1,0.1,0.1,0.5),
         transforms.ToTensor(),
         transforms.Normalize(mean, std),
-        RandomErasing(p=0.1, scale=(0.02,0.1)),     # 일부 지우기 # 0.3으로 했었음
+        RandomErasing(p=0.1, scale=(0.02,0.1)),    
     ])
     val_transform = transforms.Compose([
-        #transforms.Resize((256, 455)),
-        #transforms.CenterCrop((244, 244)),
-        #transforms.ToTensor(),
-        #transforms.Normalize(mean, std),
-        transforms.Resize(256),        # 종횡비 유지
-        transforms.CenterCrop(224),    # 중앙 224×224
+        transforms.Resize(256),       
+        transforms.CenterCrop(224),   
         transforms.ToTensor(),
         transforms.Normalize(mean, std),
     ])
@@ -131,12 +121,7 @@ if __name__ == '__main__':
         num_b=NUM_B_PROGRESS
     ).to(device)
 
-    #optimizer = torch.optim.AdamW(model.parameters(), lr=5e-4, weight_decay=1e-4)
-
-    #optimizer = torch.optim.SGD(model.parameters(), lr=0.0014, momentum=0.9, weight_decay=0.0009)
     optimizer = torch.optim.AdamW(model.parameters(), lr= 1e-4, weight_decay=7.45e-5)
-    #scheduler = StepLR(optimizer, step_size=12, gamma=0.63)
-    #criterion = nn.CrossEntropyLoss(label_smoothing=0.1)
     scheduler = CosineAnnealingLR(optimizer, T_max=EPOCHS)
     criterion = FocalLoss(alpha=0.23, gamma=1.07)
 
