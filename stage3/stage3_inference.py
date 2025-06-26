@@ -11,11 +11,13 @@ from stage3_model import Stage3NegligenceClassifier
 
 # ─── 경로 설정 ───────────────────────────────────────────────
 # Stage1 Test preds (ids, logits, labels)
-PF_TEST_PATH     = "./checkpoints4/test_first_preds.pth"
+PF_TEST_PATH     = "./checkpoints.../model.pth"
 # Stage2 Test preds (ids, feat_logits, a_logits, b_logits, labels)
-SECOND_TEST_PATH = "./checkpoints4_result/test_stage2_preds.pth"
+
+SECOND_TEST_PATH = "./checkpoints...../model.pth"
+
 # Stage3 모델 체크포인트 (model_state_dict 저장된 파일)
-STAGE3_CKPT_PATH = "./checkpoints4_result/stage3_best.pth"  # 실제 파일명으로 바꿔주세요
+STAGE3_CKPT_PATH = "./checkpoints....../model.pth"  # 실제 경로로 바꾸기
 
 # 샘플 → 클래스 매핑 CSV (Stage3Dataset 내부에서 라벨을 로드할 때 사용)
 LABEL_CSV_PATH   = "./train_data_grouped_with_class.csv"
@@ -59,7 +61,7 @@ logits = np.concatenate(all_logits, axis=0)  # [N, 11]
 preds  = np.concatenate(all_preds,  axis=0)  # [N]
 labels = np.concatenate(all_labels,axis=0)   # [N]
 
-# ─── 1) Confusion Matrix & Classification Report ───────────
+# ─── Confusion Matrix & Classification Report ───────────
 cm = confusion_matrix(labels, preds, labels=list(range(num_classes)))
 print("Confusion Matrix:")
 print(cm)
@@ -72,11 +74,11 @@ print(classification_report(
     digits=3
 ))
 
-# ─── 2) One-off Accuracy (±1 bin) ───────────────────────────
+# ─── One-off Accuracy (±1 bin) ───────────────────────────
 one_off = np.mean(np.abs(preds - labels) <= 1)
 print(f"\nOne-off Accuracy (±1 class): {one_off:.3f}")
 
-# ─── 3) Error Distribution & MAE/RMSE ────────────────────────
+# ─── Error Distribution & MAE/RMSE ────────────────────────
 errors = np.abs(preds - labels)
 mae   = errors.mean()
 rmse  = np.sqrt((errors**2).mean())

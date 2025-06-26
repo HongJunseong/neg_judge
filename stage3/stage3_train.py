@@ -103,7 +103,7 @@ for epoch in range(1, NUM_EPOCHS+1):
             'optimizer_state_dict': optimizer.state_dict(),
             'val_acc': val_acc
         }, BEST_PATH)
-        print(f"👉 New best model saved (epoch {epoch}, val_acc {val_acc:.3f}) at\n   {BEST_PATH}")
+        print(f"New best model saved (epoch {epoch}, val_acc {val_acc:.3f}) at\n   {BEST_PATH}")
 
     # ---- 메트릭 기록 ----
     history["epoch"].append(epoch)
@@ -115,5 +115,5 @@ for epoch in range(1, NUM_EPOCHS+1):
 # ─── CSV로 저장 ───────────────────────────────────────────
 df = pd.DataFrame(history)
 df.to_csv(METRICS_CSV, index=False)
-print(f"✅ Saved training metrics to {METRICS_CSV}")
+print(f"Saved training metrics to {METRICS_CSV}")
 print(f"Training complete. Best Val Acc: {best_val_acc:.3f}")

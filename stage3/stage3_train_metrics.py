@@ -68,7 +68,7 @@ for epoch in range(1, NUM_EPOCHS+1):
     preds = np.concatenate(all_preds)
     labels = np.concatenate(all_labels)
 
-    # --- 1) Confusion Matrix & Classification Report ---
+    # --- Confusion Matrix & Classification Report ---
     cm = confusion_matrix(labels, preds, labels=list(range(num_classes)))
     print("\nConfusion Matrix:")
     print(cm)
@@ -81,11 +81,11 @@ for epoch in range(1, NUM_EPOCHS+1):
         digits=3
     ))
 
-    # --- 2) One-off Accuracy (±1 bin) ---
+    # --- One-off Accuracy (±1 bin) ---
     one_off = np.mean(np.abs(preds - labels) <= 1)
     print(f"One-off Accuracy (±1 class): {one_off:.3f}")
 
-    # --- 3) 근접도 지표: Error Distribution & MAE/RMSE ---
+    # --- 근접도 지표: Error Distribution & MAE/RMSE ---
     errors = np.abs(preds - labels)  # 클래스 인덱스 차이
     mae  = errors.mean()
     rmse = np.sqrt((errors**2).mean())
