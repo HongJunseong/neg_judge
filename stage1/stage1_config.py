@@ -1,0 +1,7 @@
+TRAIN_DIR = "data/train"
+VAL_DIR = "data/val"
+NUM_CLASSES = 10
+FRAMES_PER_SAMPLE = 7
+BATCH_SIZE = 16
+EPOCHS = 50
+LR = 0.00015
