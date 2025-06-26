@@ -146,7 +146,7 @@ def main():
         if val_acc > best_acc:
             best_acc = val_acc
             torch.save(model.state_dict(), os.path.join(CHECKPOINT_DIR, "best_model.pth"))
-            print(f"[🏆 New best model] Acc {best_acc:.4f}")
+            print(f"[New best model] Acc {best_acc:.4f}")
 
         scheduler.step()
 
