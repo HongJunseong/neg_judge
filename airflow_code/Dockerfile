@@ -1,4 +1,4 @@
-FROM apache/airflow:2.5.1-python3.8
+FROM apache/airflow:2.7.3-python3.11
 
 USER root
 
@@ -11,6 +11,7 @@ RUN apt-get install -y libglib2.0-0
 USER airflow
 
 RUN pip install pytorchvideo
-RUN pip install scikit-learn pandas
+RUN pip install scikit-learn
+RUN pip install numpy==2.0.2 pandas==2.2.3
 RUN pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu118
 RUN pip install apache-airflow==${AIRFLOW_VERSION} -r /requirements.txt
