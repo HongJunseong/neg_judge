@@ -1,0 +1,12 @@
+# folder
+
+logs/
+config/
+data/
+models/
+plugins/
+preds/
+
+# file
+
+.dockerignore
