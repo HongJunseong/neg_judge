@@ -187,7 +187,7 @@ Stage2 best model test - Top-3 Accuracy :
 ### Stage3 (최종 과실 비율) 모델 분류 결과
 
 Stage3 best model train, val - Loss result :
-|Dataset|	Loss (CrossEntorpy)	|Top-1 Accuracy|
+|Dataset|	Loss (CrossEntropy)	|Top-1 Accuracy|
 |:------:|:--------:|:----------:|
 |Train|	0.873|	0.878|
 |Validation|	1.758	|	0.557	|
